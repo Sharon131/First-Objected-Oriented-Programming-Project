@@ -15,45 +15,25 @@ public class AnimalTest {
 
     @Test
     public void testOrientation(){
-        someAnimal.move(MoveDirection.RIGHT);
+        someAnimal.moveTo(MoveDirection.RIGHT);
         assertEquals(someAnimal.orientation, MapDirection.EAST);
-        someAnimal.move(MoveDirection.LEFT);
+        someAnimal.moveTo(MoveDirection.LEFT);
         assertEquals(someAnimal.orientation, MapDirection.NORTH);
     }
 
     @Test
     public void testPosition(){
-        someAnimal.move(MoveDirection.FORWARD);
+        someAnimal.moveTo(MoveDirection.FORWARD);
         assertEquals(someAnimal.position, new Vector2d(2, 3));
 
-        someAnimal.move(MoveDirection.BACKWARD);
+        someAnimal.moveTo(MoveDirection.BACKWARD);
         assertEquals(someAnimal.position, new Vector2d(2, 2));
     }
 
-    /*@Test
-    public void testMapRange(){
-        someAnimal.move(MoveDirection.BACKWARD);
-        assertEquals(someAnimal.position, new Vector2d(2, 1));
-        someAnimal.move(MoveDirection.BACKWARD);
-        assertEquals(someAnimal.position, new Vector2d(2, 0));
-        someAnimal.move(MoveDirection.BACKWARD);
-        assertEquals(someAnimal.position, new Vector2d(2, -1));
-        someAnimal.move(MoveDirection.BACKWARD);
-        assertEquals(someAnimal.position, new Vector2d(2, -2));
-        someAnimal.move(MoveDirection.BACKWARD);
-        assertEquals(someAnimal.position, new Vector2d(2, -3));
-        someAnimal.move(MoveDirection.BACKWARD);
-        assertEquals(someAnimal.position, new Vector2d(2, -4));
-        someAnimal.move(MoveDirection.BACKWARD);
-        assertEquals(someAnimal.position, new Vector2d(2, -4));
-
-        someAnimal.move(MoveDirection.RIGHT);
-        someAnimal.move(MoveDirection.FORWARD);
-        assertEquals(someAnimal.position, new Vector2d(3, -4));
-        someAnimal.move(MoveDirection.FORWARD);
-        assertEquals(someAnimal.position, new Vector2d(4, -4));
-        someAnimal.move(MoveDirection.FORWARD);
-        assertEquals(someAnimal.position, new Vector2d(4, -4));
-    }*/
-
+    @Test
+    public void testMove(){
+        Vector2d oldPos = someAnimal.position;
+        someAnimal.moveTo(MoveDirection.FORWARD_LEFT);
+        assertEquals(someAnimal.position, oldPos.add(someAnimal.orientation.toUnitVector()));
+    }
 }

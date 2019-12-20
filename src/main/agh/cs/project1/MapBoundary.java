@@ -17,6 +17,17 @@ public class MapBoundary implements IPositionChangeObserver {
         positionsByY.add(grass.position);
     }
 
+    public void removeAnimal(Animal animal){
+        animal.removeObserver(this);
+        positionsByX.remove(animal.position);
+        positionsByY.remove(animal.position);
+    }
+
+    public void removeGrass(Grass grass){
+        positionsByX.remove(grass.position);
+        positionsByY.remove(grass.position);
+    }
+
     public Vector2d getLowerLeftCornerOfMap(){
         return new Vector2d(getMinX(), getMinY());
     }

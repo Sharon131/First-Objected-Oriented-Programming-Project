@@ -2,27 +2,45 @@ package agh.cs.project1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Vector;
 
 public class Animal implements IMapElement{
     public Vector2d position;
-    public MapDirection orientation = MapDirection.NORTH;
+    public MapDirection orientation = MapDirection.NORTH;       //init is random
     private AbstractWorldMap map;
     private List<IPositionChangeObserver> observers = new ArrayList<>();
+    private int energyLevel = 0;         //should be taken from file
+    private Random rand = new Random();
+    private int daysTilAdult = 0;
+    private AnimalGenes genes = new AnimalGenes();
 
     public String toString(){
         String stringOrientation;
         switch (this.orientation) {
+            case NORTH:
+                stringOrientation = "^";
+                break;
+            case NORTH_EAST:
+                stringOrientation = "NE";
+                break;
             case EAST:
                 stringOrientation = ">";
+                break;
+            case SOUTH_EAST:
+                stringOrientation = "SE";
+                break;
+            case SOUTH:
+                stringOrientation = "v";
+                break;
+            case SOUTH_WEST:
+                stringOrientation = "SW";
                 break;
             case WEST:
                 stringOrientation = "<";
                 break;
-            case NORTH:
-                stringOrientation = "^";
-                break;
-            case SOUTH:
-                stringOrientation = "v";
+            case NORTH_WEST:
+                stringOrientation = "NW";
                 break;
             default:
                 stringOrientation = ".";
@@ -41,34 +59,45 @@ public class Animal implements IMapElement{
         position = initialPosition;
     }
 
+    public Animal(AbstractWorldMap map, int startEnergy){
+        this.map = map;
+        this.position = new Vector2d(rand.nextInt(8), rand.nextInt(8));     //bound zadane na wejściu
+        this.energyLevel = startEnergy;
+    }
+
+    public Animal(AbstractWorldMap map, Vector2d initialPos, int startEnergy){
+        this.map = map;
+        this.position = initialPos;
+        this.energyLevel = startEnergy;
+    }
+
     public Vector2d getPosition() {
         return position;
     }
 
-    public void move(MoveDirection direction){
+    public void moveTo(MoveDirection direction){
         Vector2d oldPosition = this.position;
-        if(direction == MoveDirection.RIGHT){
-            orientation = orientation.next();
-            return;
-        }
-        if(direction == MoveDirection.LEFT){
-            orientation = orientation.previous();
-            return;
-        }
-        if(direction == MoveDirection.FORWARD){
-            if(map.canMoveTo(position.add(this.orientation.toUnitVector()))){
-                position = position.add(this.orientation.toUnitVector());
-                this.positionChanged(oldPosition, this.position);
+
+        if (MoveDirection.BACKWARD.compareTo(direction) == -1){
+            for (int i = 0; i < (8 - direction.ordinal()); i++){    //turn left x times, another func??
+                this.orientation = this.orientation.previous();
             }
-            return;
-        }
-        if(direction == MoveDirection.BACKWARD) {
-            if(map.canMoveTo(position.subtract(this.orientation.toUnitVector()))) {
-                position = position.subtract(this.orientation.toUnitVector());
-                this.positionChanged(oldPosition, this.position);
+        } else {
+            for (int i = 0; i < direction.ordinal(); i++){          //turn right x times
+                this.orientation = this.orientation.next();
             }
-            return;
         }
+
+        Vector2d newPosition = position.add(this.orientation.toUnitVector());
+        if(map.canMoveTo(newPosition)) {
+            this.position = newPosition;
+            this.positionChanged(oldPosition, this.position);
+        }
+    }
+
+    public void makeAMove(){
+        int movement = genes.getNextMove();
+        this.moveTo(MoveDirection.intToMove(movement));
     }
 
     public void addObserver(IPositionChangeObserver observer){
@@ -87,4 +116,8 @@ public class Animal implements IMapElement{
         }
     }
 
+    public Animal procreateWith(Animal other){
+
+        return new Animal(map);
+    }
 }

@@ -16,7 +16,7 @@ public class OptionParserTest {
         MoveDirection[] movesToMake = parser.parse(stringToConvert);
 
         for (MoveDirection moveDirection : movesToMake) {
-            Elephant.move(moveDirection);
+            Elephant.moveTo(moveDirection);
         }
 
         assertEquals(Elephant.orientation, MapDirection.EAST);

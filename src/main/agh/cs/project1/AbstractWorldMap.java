@@ -34,7 +34,7 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
 
         for (int index = 0; index < directions.length; index++) {
             Animal animalOnMap = animals.get(index % numberOfAnimals);
-            animalOnMap.move(directions[index]);
+            animalOnMap.moveTo(directions[index]);
         }
     }
 

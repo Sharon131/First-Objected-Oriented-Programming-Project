@@ -17,6 +17,7 @@ public class World {
             System.exit(1);
         }
 
-
+        JsonFileReader reader = new JsonFileReader();
+        reader.readJsonFile("parameters.json");
     }
 }

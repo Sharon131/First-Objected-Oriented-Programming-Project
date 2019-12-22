@@ -1,35 +1,39 @@
 package agh.cs.project1;
 
-import jdk.nashorn.internal.parser.JSONParser;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class JsonFileReader {
-    //private JSONParser jsonParser = new JSONParser();
+    private JSONParser jsonParser = new JSONParser();
 
     public String readJsonFile(String fileName){
 
-        try (FileReader reader = new FileReader("employees.json"))
+        try (FileReader reader = new FileReader(fileName))
         {
-            //Read JSON file
-            //Object obj = jsonParser.parse(reader);
+            Object object = jsonParser.parse(reader);
 
-            //JSONArray employeeList = (JSONArray) obj;
-            //System.out.println(employeeList);
+            JSONObject parameters = (JSONObject) object;
+            System.out.println(parameters);
 
-            //Iterate over employee array
-            //employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
+            System.out.println(parameters.get("width"));
+            System.out.println(parameters.get("height"));
+            System.out.println(parameters.get("startEnergy"));
+            System.out.println(parameters.get("moveEnergy"));
+            System.out.println(parameters.get("plantEnergy"));
+            System.out.println(parameters.get("jungleRatio"));
 
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex);;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } /*catch (ParseException e) {
-            e.printStackTrace();
-        }*/
+        } catch (FileNotFoundException exception) {
+            System.out.println(exception);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch (ParseException exception) {
+            exception.printStackTrace();
+        }
 
         return null;
     }

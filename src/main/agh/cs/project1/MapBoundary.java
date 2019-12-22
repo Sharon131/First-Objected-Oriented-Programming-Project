@@ -53,7 +53,8 @@ public class MapBoundary implements IPositionChangeObserver {
     }
 
     @Override
-    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+    public void positionChanged(Vector2d oldPosition, Animal animal) {
+        Vector2d newPosition = animal.getPosition();
         if(oldPosition.x != newPosition.x){
             positionsByX.remove(oldPosition);
             positionsByX.add(newPosition);

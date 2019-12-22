@@ -1,5 +1,7 @@
 package agh.cs.project1;
 
+import java.util.Random;
+
 public enum MapDirection {
     NORTH,
     NORTH_EAST,
@@ -122,6 +124,19 @@ public enum MapDirection {
             ; //is at the end
         }
         return new Vector2d(-1, 1);
+    }
+
+    public static MapDirection intToDirection(int number) {
+        MapDirection[] values = values();
+        if (number >= values.length){
+            throw new IllegalArgumentException("Arg is out of range.");
+        }
+        return values[number];
+    }
+
+    public static MapDirection getRandomDirection(Random rand) {
+        MapDirection[] values = values();
+        return values[rand.nextInt(values.length)];
     }
 
 }

@@ -6,15 +6,14 @@ import java.util.List;
 public class MapField {
     private Vector2d position;
     private List<Animal> animals = new ArrayList<>();
-    private List<Grass> grasses = new ArrayList<>();
+    private List<Grass> grass = new ArrayList<>();
 
     public void addMapElement(IMapElement element){
         if (element instanceof Animal) {
             Animal animal = (Animal) element ;
             animals.add(animal);
-            //animal.addObserver(this);     //needed???
         } else if (element instanceof Grass) {
-            grasses.add((Grass)element);
+            grass.add((Grass)element);
         }
     }
 
@@ -22,7 +21,7 @@ public class MapField {
         if (element instanceof Animal) {
             animals.remove((Animal)element);
         } else if (element instanceof Grass) {
-            grasses.remove((Grass)element);
+            grass.remove((Grass)element);
         }
     }
 
@@ -31,11 +30,11 @@ public class MapField {
     }
 
     public boolean containsGrass(){
-        return !grasses.isEmpty();
+        return !grass.isEmpty();
     }
 
     public boolean isEmpty(){
-        return animals.isEmpty() && grasses.isEmpty();
+        return animals.isEmpty() && grass.isEmpty();
     }
 
 }

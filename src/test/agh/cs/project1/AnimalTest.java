@@ -5,35 +5,42 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class AnimalTest {
-    private AbstractWorldMap map = new RectangularMap(4, 4);
-    private Animal someAnimal = new Animal(map);
-
-    @Test
+    private AbstractWorldMap map = new RectangularMap(4, 4);    //should be wrapped map
+    private Vector2d initPos = new Vector2d(2, 2);
+    /*@Test
     public void testToString(){
         assertEquals("^", someAnimal.toString());
-    }
+    }*/
 
     @Test
     public void testOrientation(){
-        someAnimal.moveTo(MoveDirection.RIGHT);
-        assertEquals(someAnimal.orientation, MapDirection.EAST);
-        someAnimal.moveTo(MoveDirection.LEFT);
-        assertEquals(someAnimal.orientation, MapDirection.NORTH);
+        Animal animal = new Animal(map, initPos, 10);
+        MapDirection initOrientation = animal.orientation;
+
+        animal.moveTo(MoveDirection.RIGHT);
+        assertEquals(initOrientation.ordinal() + 2, animal.orientation.ordinal());
+
+        animal.moveTo(MoveDirection.BACKWARD);
+        assertEquals(initOrientation.ordinal() + 6, animal.orientation.ordinal());
     }
 
     @Test
     public void testPosition(){
-        someAnimal.moveTo(MoveDirection.FORWARD);
-        assertEquals(someAnimal.position, new Vector2d(2, 3));
+        Animal someAnimal = new Animal(map, initPos, 10);
 
-        someAnimal.moveTo(MoveDirection.BACKWARD);
-        assertEquals(someAnimal.position, new Vector2d(2, 2));
+        someAnimal.moveTo(MoveDirection.FORWARD_RIGHT);
+        Vector2d newPos = initPos.add(someAnimal.orientation.toUnitVector());
+        assertEquals(newPos, someAnimal.position);
+
+        someAnimal.moveTo(MoveDirection.BACKWARD_LEFT);
+        assertEquals(newPos.add(someAnimal.orientation.toUnitVector()), someAnimal.position);
     }
 
     @Test
     public void testMove(){
-        Vector2d oldPos = someAnimal.position;
+        Animal someAnimal = new Animal(map, initPos, 10);
+
         someAnimal.moveTo(MoveDirection.FORWARD_LEFT);
-        assertEquals(someAnimal.position, oldPos.add(someAnimal.orientation.toUnitVector()));
+        assertEquals(someAnimal.position, initPos.add(someAnimal.orientation.toUnitVector()));
     }
 }

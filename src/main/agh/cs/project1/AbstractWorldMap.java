@@ -29,7 +29,7 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     }
 
     @Override
-    public void run(MoveDirection[] directions) {
+    public void run(MoveDirection[] directions) { //not needed
         int numberOfAnimals = animals.size();
 
         for (int index = 0; index < directions.length; index++) {
@@ -43,9 +43,8 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         return (this.objectAt(position) != null);
     }
 
-    public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
-        Animal animalOnMap = animalsByPositions.get(oldPosition);
+    public void positionChanged(Vector2d oldPosition, Animal animal){
         animalsByPositions.remove(oldPosition);
-        animalsByPositions.putIfAbsent(animalOnMap.getPosition(), animalOnMap);
+        animalsByPositions.putIfAbsent(animal.getPosition(), animal);
     }
 }

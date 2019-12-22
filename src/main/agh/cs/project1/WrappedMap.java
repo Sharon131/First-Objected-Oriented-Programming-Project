@@ -35,19 +35,21 @@ public class WrappedMap extends AbstractWorldMap {
     }
 
     @Override
-    public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
-        super.positionChanged(oldPosition, newPosition);
-        //eat grass, when it's on the same place (add overriding func in grassfield and add super)
-        //also copulate if there's animal at the same place;
-        MapField field = fields.get(newPosition);
+    public void positionChanged(Vector2d oldPosition, Animal animal){
+        super.positionChanged(oldPosition, animal);
+
+        MapField field = fields.get(animal.getPosition());
 
         if (field.containsAnimal()){
-            //map.copulateAtPos(newPosition);
+            //map.procreateAt(animal.getPosition());
         }
         if (field.containsGrass()){
-            //map.removeGrass(position);
+            //Grass grass = field.getGrass();
+            //field.removeMapElement(grass);
         }
 
+        fields.get(oldPosition).removeMapElement(animal);
+        field.addMapElement(animal);
     }
 
     public void nextDay(){

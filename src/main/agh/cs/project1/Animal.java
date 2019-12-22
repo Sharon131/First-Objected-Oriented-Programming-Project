@@ -3,15 +3,14 @@ package agh.cs.project1;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Vector;
 
 public class Animal implements IMapElement{
+    private Random rand = new Random();
     public Vector2d position;
-    public MapDirection orientation = MapDirection.NORTH;       //init is random
+    public MapDirection orientation = MapDirection.getRandomDirection(new Random());       //init is random actually
     private AbstractWorldMap map;
     private List<IPositionChangeObserver> observers = new ArrayList<>();
-    private int energyLevel = 0;         //should be taken from file
-    private Random rand = new Random();
+    private int energyLevel;
     private int daysTilAdult = 0;
     private AnimalGenes genes = new AnimalGenes();
 
@@ -49,21 +48,22 @@ public class Animal implements IMapElement{
         return stringOrientation;
     }
 
-    public Animal(AbstractWorldMap map) {
+    public Animal(AbstractWorldMap map) {       //will not be needed
         this.map = map;
         position = new Vector2d(2,2);
     }
 
-    public Animal(AbstractWorldMap map, Vector2d initialPosition) {
+    public Animal(AbstractWorldMap map, Vector2d initialPosition) { //will not be needed
         this.map = map;
         position = initialPosition;
     }
 
-    public Animal(AbstractWorldMap map, int startEnergy){
+    // bound zadane na wejściu, zatem lepiej będzie generować pozycję w wrappedMap
+    /* public Animal(AbstractWorldMap map, int startEnergy){
         this.map = map;
         this.position = new Vector2d(rand.nextInt(8), rand.nextInt(8));     //bound zadane na wejściu
         this.energyLevel = startEnergy;
-    }
+    } */
 
     public Animal(AbstractWorldMap map, Vector2d initialPos, int startEnergy){
         this.map = map;
@@ -98,6 +98,11 @@ public class Animal implements IMapElement{
     public void makeAMove(){
         int movement = genes.getNextMove();
         this.moveTo(MoveDirection.intToMove(movement));
+        daysTilAdult -= 1;
+    }
+
+    public boolean isAdult(){
+        return daysTilAdult <= 0;
     }
 
     public void addObserver(IPositionChangeObserver observer){
@@ -119,5 +124,9 @@ public class Animal implements IMapElement{
     public Animal procreateWith(Animal other){
 
         return new Animal(map);
+    }
+
+    public void eatGrass(Grass grass){
+        //energyLevel += grass.energyLevel; //its private
     }
 }

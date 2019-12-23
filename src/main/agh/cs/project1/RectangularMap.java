@@ -1,6 +1,6 @@
 package agh.cs.project1;
 
-public class RectangularMap extends AbstractWorldMap {
+/*public class RectangularMap extends AbstractWorldMap {
     private Vector2d upperRightCornerOfMap;
     private Vector2d lowerLeftCornerOfMap;
 
@@ -21,4 +21,4 @@ public class RectangularMap extends AbstractWorldMap {
     public Object objectAt(Vector2d position) {
         return animalsByPositions.get(position);
     }
-}
+}*/

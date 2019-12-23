@@ -11,6 +11,14 @@ import org.json.simple.parser.ParseException;
 public class JsonFileReader {
     private JSONParser jsonParser = new JSONParser();
 
+    public long mapWidth;
+    public long mapHeight;
+    public long startEnergy;
+    public long moveEnergy;
+    public long plantEnergy;
+    public long jungleWidth;
+    public long jungleHeight;
+
     public String readJsonFile(String fileName){
 
         try (FileReader reader = new FileReader(fileName))
@@ -20,12 +28,19 @@ public class JsonFileReader {
             JSONObject parameters = (JSONObject) object;
             System.out.println(parameters);
 
-            System.out.println(parameters.get("width"));
-            System.out.println(parameters.get("height"));
-            System.out.println(parameters.get("startEnergy"));
-            System.out.println(parameters.get("moveEnergy"));
-            System.out.println(parameters.get("plantEnergy"));
-            System.out.println(parameters.get("jungleRatio"));
+            this.mapWidth = (Long) parameters.get("width");
+            this.mapHeight = (Long) parameters.get("height");
+            this.startEnergy = (Long) parameters.get("startEnergy");
+            this.moveEnergy = (Long) parameters.get("moveEnergy");
+            this.plantEnergy = (Long) parameters.get("plantEnergy");
+            double jungleRatio = (Double) parameters.get("jungleRatio");
+
+            System.out.println(mapWidth);
+            System.out.println(mapHeight);
+            System.out.println(startEnergy);
+            System.out.println(moveEnergy);
+            System.out.println(plantEnergy);
+            System.out.println(jungleRatio);
 
         } catch (FileNotFoundException exception) {
             System.out.println(exception);
@@ -36,6 +51,11 @@ public class JsonFileReader {
         }
 
         return null;
+    }
+
+    private void computeJungleSize(double jungleRatio){
+        jungleHeight = (long) (mapHeight*jungleRatio);
+        jungleWidth = (long) (mapWidth*jungleRatio);
     }
 
 }

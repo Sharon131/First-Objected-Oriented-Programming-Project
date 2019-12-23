@@ -5,7 +5,7 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 
 public class OptionParserTest {
-    private AbstractWorldMap map = new RectangularMap(10, 5);
+    private AbstractWorldMap map = new GrassField(10);
     private Animal Elephant = new Animal(map);
 
     private static OptionParser parser = new OptionParser();

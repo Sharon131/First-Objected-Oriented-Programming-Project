@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class AnimalTest {
-    private AbstractWorldMap map = new RectangularMap(4, 4);    //should be wrapped map
+    private AbstractWorldMap map = new GrassField(4);    //should be wrapped map
     private Vector2d initPos = new Vector2d(2, 2);
     /*@Test
     public void testToString(){

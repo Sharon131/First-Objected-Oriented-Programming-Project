@@ -1,10 +1,22 @@
 package agh.cs.project1;
 
-public class MapVisualizer {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class MapVisualizer extends JPanel implements ActionListener {
     private static final String EMPTY_CELL = " ";
     private static final String FRAME_SEGMENT = "-";
     private static final String CELL_SEGMENT = "|";
     private IWorldMap map;
+
+    public MapVisualizer(MapBoundary map, MapBoundary jungle){ //as args take map and take width, height and jungleRatio out of it
+        //this.mapWidth = map.getWidth
+        //this.mapHeight = map.getHeight;
+        //this.jungle (?) = jungle;
+        ;
+    }
 
     /**
      * Initializes the MapVisualizer with an instance of map to visualize.
@@ -76,5 +88,16 @@ public class MapVisualizer {
             result = EMPTY_CELL;
         }
         return result;
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        repaint();
     }
 }

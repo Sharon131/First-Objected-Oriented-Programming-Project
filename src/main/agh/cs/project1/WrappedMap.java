@@ -9,11 +9,7 @@ public class WrappedMap extends AbstractWorldMap {
     private MapBoundary jungle = new MapBoundary();
 
     public  WrappedMap(){
-        //width and height of map as input
-        //start energy of animal
-        //move energy
-        //plantEnergy
-        //jungleRatio
+        ;
     }
 
     @Override
